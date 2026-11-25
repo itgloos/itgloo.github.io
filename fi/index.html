@@ -32,6 +32,31 @@ a{color:#1A56E8}a:hover{color:#171B20}
 h1,h2,h3{hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
 a[style*="background: #FF8A3D"]:hover{filter:brightness(1.07)}
 html{scroll-behavior:smooth}
+/* hover & motion */
+.navlinks a{position:relative;transition:color .2s}
+.navlinks a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:#FF8A3D;transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.navlinks a:hover{color:#FFFFFF !important}.navlinks a:hover::after{transform:scaleX(1)}
+a[style*="background: #FF8A3D"]{transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s,filter .2s}
+a[style*="background: #FF8A3D"]:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(13,16,19,.22)}
+#services .g3>article{position:relative;overflow:hidden;transition:opacity .6s ease,transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s,border-color .3s}
+#services .g3>article::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:#1A56E8;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+#services .g3>article:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(13,16,19,.10);border-color:#B9CCF7 !important}
+#services .g3>article:hover::before{transform:scaleX(1)}
+#travel .g3>article{transition:opacity .6s ease,transform .3s cubic-bezier(.4,0,.2,1),background-color .3s,border-color .3s,box-shadow .3s}
+#travel .g3>article:hover{transform:translateY(-6px);background:#1E5CEB !important;border-color:#A8C8FF !important;box-shadow:0 22px 48px rgba(5,20,70,.35)}
+#work figure{transition:opacity .6s ease,transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s}
+#work figure:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 40px 80px rgba(13,16,19,.26) !important}
+#china .g2>div:last-child>div{transition:opacity .6s ease,transform .6s ease,background-color .25s,padding .25s}
+#china .g2>div:last-child>div:hover{background:#FFFFFF;padding-left:16px !important;padding-right:16px !important}
+#china .g2>div:last-child>div h3{transition:color .25s}
+#china .g2>div:last-child>div:hover h3{color:#1A56E8}
+#why .g4>div{transition:opacity .6s ease,border-color .3s,transform .3s cubic-bezier(.4,0,.2,1)}
+#why .g4>div:hover{border-top-color:#1A56E8 !important;transform:translateY(-4px)}
+#contact dl>div{transition:transform .25s,background-color .25s}
+#contact dl>div:hover{transform:translateX(4px)}
+.js-reveal .rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.js-reveal .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}.js-reveal .rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -345,5 +370,13 @@ html{scroll-behavior:smooth}
 </footer>
 
 </div>
+<script>
+(function(){if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+document.documentElement.classList.add('js-reveal');
+var els=document.querySelectorAll('section:not(#top) .g3>article,section:not(#top) .g4>div,#china .g2>div:last-child>div,#work figure,section:not(#top) .sec-h');
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+els.forEach(function(el,i){el.classList.add('rv');var p=el.parentElement,idx=Array.prototype.indexOf.call(p.children,el);el.style.transitionDelay=(Math.min(idx,5)*70)+'ms';io.observe(el)});
+document.addEventListener('transitionend',function(e){if(e.target.classList&&e.target.classList.contains('in'))e.target.style.transitionDelay=''});})();
+</script>
 </body>
 </html>
